@@ -83,17 +83,17 @@
 
     function excluir($codigo){
         $pdo = Conexao::getInstance();
-        $stmt = $pdo->prepare('UPDATE anotacoes SET ativa = :ativa WHERE codigo = :codigo');
-        $stmt->bindParam(':codigo', $codigo, PDO::PARAM_INT);
         $ativa = 0;
+        $stmt = $pdo->prepare('UPDATE anotacoes SET ativa = :ativa WHERE codigo = :codigo;');
         $stmt->bindParam(':ativa', $ativa, PDO::PARAM_INT);
+        $stmt->bindParam(':codigo', $codigo, PDO::PARAM_INT);
         $stmt->execute();
         header("location:index.php");
     }
 
     function recuperar($codigo){
         $pdo = Conexao::getInstance();
-        $stmt = $pdo->prepare('UPDATE anotacoes SET ativa = :ativa WHERE codigo = :codigo');
+        $stmt = $pdo->prepare('UPDATE anotacoes SET ativa = :ativa WHERE codigo = :codigo;');
         $stmt->bindParam(':codigo', $codigo, PDO::PARAM_INT);
         $ativa = 1;
         $stmt->bindParam(':ativa', $ativa, PDO::PARAM_INT);

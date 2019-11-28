@@ -86,7 +86,7 @@ $estrela = isset($_GET['estrela']) ? $_GET['estrela'] : "";
     </div>
     </form>
     <?php 
-        apresentaNotas(obtemSQL());
+        apresentaNotasCards(obtemSQL());
     ?>
     
     

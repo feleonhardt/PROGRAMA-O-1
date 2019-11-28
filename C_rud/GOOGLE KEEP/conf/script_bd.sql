@@ -8,7 +8,7 @@ titulo varchar(225) not null,
 texto varchar(2000) not null,
 cor_fundo varchar(10),
 tags varchar(1000) not null,
-ativa boolean not null,
+ativa int not null,
 star boolean not null
 );
 
@@ -23,6 +23,7 @@ select * from anotacoes where (titulo like '%o%' or texto like '%o%') and star =
 select * from anotacoes where ativa = 0;
 
 Update anotacoes set ativa = 1 where ativa = 0 and codigo =1;
+
 delete from anotacoes where codigo >0;
 select * from anotacoes;
 drop database google_keep;

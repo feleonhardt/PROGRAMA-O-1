@@ -107,4 +107,126 @@ function obtemSQL(){
     return $consulta;
 }
 
+function apresentaNotasTabela($consulta){
+    $ativa = $GLOBALS['ativa'];
+    ?>
+    <table>
+    <tr>
+        <th>Código</th>
+        <th>Título</th>
+        <th>Texto</th>
+        <th>Tags</th>
+        <th>Ação</th>
+    </tr>
+    <?php
+    $cont=1;
+    while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
+        if (verificaCor($linha['cor_fundo'])) {
+            $cor = '#000000';
+        }else {
+            $cor = '#ffffff';
+        }
+        ?>
+        <tr style="background-color: <?php echo $linha['cor_fundo']; ?>; color: <?php echo $cor; ?>;">
+        <td>
+        <?php echo $linha['codigo']; ?>
+        </td>
+        <td>
+        <?php 
+            if ($linha['star'] == 1) {
+                echo "<i class='material-icons'>star</i> ";
+            }
+            echo $linha['titulo'];?>
+        </td>
+        <td>
+            <p><?php echo $linha['texto'];?></p>
+        </td>
+        <td>
+            <p><?php echo $linha['tags'];?></p>
+        </td>
+        <td>
+            <?php if ($ativa == 0) {
+            // echo "ATIVAS";
+            ?>
+                <a href="javascript:recuperarRegistro('acao.php?acao=recuperar&codigo=<?php echo $linha['codigo'];?>')" style="color: <?php echo $cor; ?>;font-weight: 800;">RECUPERAR</a>
+                <?php
+            }else {
+                // echo "EXCLUÍDAS";
+                ?>
+                <a href='cad.php?acao=editar&codigo=<?php echo $linha['codigo'];?>' style="color: <?php echo $cor; ?>;font-weight: 800;">ALTERAR</a>
+                <a href="javascript:excluirRegistro('acao.php?acao=excluir&codigo=<?php echo $linha['codigo'];?>')" style="color: <?php echo $cor; ?>;font-weight: 800;">EXCLUIR</a>
+                <?php
+            } ?>
+        </td>
+        
+        
+        </tr>
+        <?php
+    }
+        ?>
+        </table>
+        <?php
+}
+
+function apresentaNotasCards($consulta){
+    $ativa = $GLOBALS['ativa'];
+    ?>
+    <div class="row container">
+    <?php
+    $cont=1;
+    while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
+        if (verificaCor($linha['cor_fundo'])) {
+            $cor = '#000000';
+        }else {
+            $cor = '#ffffff';
+        }
+    ?>
+            <div class="col l3">
+                <div class="card" style="border-radius: 15px;background-color: <?php echo $linha['cor_fundo'];?>;color: <?php echo $cor; ?>;">
+                    <div class="card-content">
+                    <div class="card-title">
+                        <span style="font-weight: 600;"><?php 
+                            if ($linha['star'] == 1) {
+                                echo "<i class='material-icons'>star</i> ";
+                            }
+                            echo $linha['titulo'];?>
+                        </span>
+                            </div>
+                        <?php echo $linha['texto'];?>
+                        <br><br>
+                        <hr style="border-color: <?php echo $cor; ?>;">
+                        <?php echo $linha['tags'];?>
+                    </div>
+                    <div class="card-action center" style="border-radius: 15px;">
+                    <?php if ($ativa == 0) {
+                        // echo "ATIVAS";
+                        ?>
+                        <a href="javascript:recuperarRegistro('acao.php?acao=recuperar&codigo=<?php echo $linha['codigo'];?>')" style="color: <?php echo $cor; ?>;font-weight: 800;">RECUPERAR</a>
+                        <?php
+                    }else {
+                        // echo "EXCLUÍDAS";
+                        ?>
+                        <a href='cad.php?acao=editar&codigo=<?php echo $linha['codigo'];?>' style="color: <?php echo $cor; ?>;font-weight: 800;">ALTERAR</a>
+                        <a href="javascript:excluirRegistro('acao.php?acao=excluir&codigo=<?php echo $linha['codigo'];?>')" style="color: <?php echo $cor; ?>;font-weight: 800;">EXCLUIR</a>
+                        <?php
+                    } ?>
+                    </div>
+                </div>
+            </div>
+        <?php
+        if ($cont%4==0) {
+            ?>
+            </div>
+            <div class="row container">
+            <?php 
+            $ok = true;
+         }
+         $cont++;
+        }
+        ?>
+        </div>
+        <?php
+}
+
+
 ?>
